@@ -7,7 +7,7 @@ namespace M320_HotelmanagementSystem.OtherClasses{
         string _passWord = "";
         string _database = "hotelmanagement_db";
         MySqlConnection _connection;
-        private connection_class(){
+        public connection_class(){
             string connectionString = $"server={_host};userid={_userID};password={_passWord};database={_database};";
             _connection = new MySqlConnection(connectionString);
         }
