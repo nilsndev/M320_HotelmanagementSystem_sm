@@ -1,17 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace M320_HotelmanagementSystem.Models
-{
-    public class User
-    {
+namespace M320_HotelmanagementSystem.Models{
+    public class User{
         [JsonPropertyName("User_Id")]
-        string Id { get; set; }
-
+        public int Id { get; set; }
         [JsonPropertyName("User_Name")]
-        string userName { get; set; }
-
+        public string userName { get; set; }
         [JsonPropertyName("Passwort")]
-
-        string passwort { get; set; }
+        public string passwort { get; set; }
     }
 }

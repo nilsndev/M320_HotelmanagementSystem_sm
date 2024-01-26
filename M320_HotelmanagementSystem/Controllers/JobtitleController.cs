@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-namespace M320_HotelmanagementSystem.Controllers
-{
+namespace M320_HotelmanagementSystem.Controllers{
     [Route("api/[controller]")]
     [ApiController]
-    public class JobtitleController : ControllerBase
-    {
+    public class JobtitleController : ControllerBase{
     }
 }

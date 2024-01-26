@@ -11,7 +11,7 @@ namespace M320_HotelmanagementSystem.OtherClasses{
             string connectionString = $"server={_host};userid={_userID};password={_passWord};database={_database};";
             _connection = new MySqlConnection(connectionString);
         }
-        private MySqlConnection getConnection(){
+        public MySqlConnection getConnection(){
             if (_connection.State != System.Data.ConnectionState.Open){
                 _connection.Open();
             }
