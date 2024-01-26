@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" />
+        <br />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+        <br />
+        <input type="submit" value="Regristrieren"  onclick="bestatigen()"/>
+        <input type="submit" value="Login"  onclick="Login()"/>
+</body>
+<script>
+    function bestatigen()
+    {
+        var userName = document.getElementById("username").value;
+        var passWord = document.getElementById("password").value;
+        alert("Username: " + userName + " , Passwort " + passWord);
+var data = {
+
+    User_Id: 0,
+    User_Name: userName,
+    passWort: passWord,
+}
+console.log(data);
+fetch('api/user' , {
+    method: 'Post',
+    headers: {
+        'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify(data)
+}) 
+
+.then(result => {
+    console.log('POST-Antwort:', result);
+
+})
+.catch(error => {
+    console.error('Fehler beim POST:', error);
+});
+    }
+
+function Login()
+{
+    var userName = document.getElementById("username").value;
+        var passWord = document.getElementById("password").value;
+        var url = `api/user?User_Name=${encodeURIComponent(userName)}&Passwort=${encodeURIComponent(passWord)}`;
+        fetch(url , 
+        {
+        method: 'Get',
+         } )
+         .then(response => response.json())
+         .then(result => {
+console.log('Get-Antwort:', result );
+
+         })
+         .catch(error =>{
+
+            console.error('Fehler beim Get:', error);
+         });
+}
+
+
+
+</script>
+</html>
