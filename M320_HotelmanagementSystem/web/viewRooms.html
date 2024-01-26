@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Room Management</title>
+</head>
+
+<body>
+    <div class="col-md-6">
+        <ul id="room_table" class="list-group"></ul>
+    </div>
+     <!-----------------------------------------INSERT--------------------------------------------------------->
+    <div class="container mt-4" id="addRoom">
+        <div class="mb-3">
+            <label for="RoomName_tb" class="form-label">Room Name</label>
+            <input type="text" class="form-control" id="RoomName_tb">
+        </div>
+        <div class="mb-3">
+            <label for="is_available_tb" class="form-label">Availability</label>
+            <select id="is_available_tb" class="form-select">
+                <option value="true">Available</option>
+                <option value="false">Not Available</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="room_price_tb" class="form-label">Room Price</label>
+            <input type="text" class="form-control" id="room_price_tb">
+        </div>
+        <div class="mb-3">
+            <label for="person_count_tb" class="form-label">Person Count</label>
+            <input type="text" class="form-control" id="person_count_tb">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addOneRoom()">Add Room</button>
+    </div>
+    <!--------------------------------------------------------------------------------------------------------->
+    <!------------------------------------------------------Update--------------------------------------------->
+    <div class="container mt-4" id="updateRoom" style="display: none;">
+        <div class="mb-3">
+            <label for="u_Roomid_tb" class="form-label">Room ID:</label>
+            <input type="text" class="form-control" id="u_Roomid_tb">
+        </div>
+        <div class="mb-3">
+            <label for="u_RoomName_tb" class="form-label">Room Name</label>
+            <input type="text" class="form-control" id="u_RoomName_tb">
+        </div>
+        <div class="mb-3">
+            <label for="u_is_available_tb" class="form-label">Availability</label>
+            <select id="u_is_available_tb" class="form-select">
+                <option value="true">Available</option>
+                <option value="false">Not Available</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="u_room_price_tb" class="form-label">Room Price</label>
+            <input type="text" class="form-control" id="u_room_price_tb">
+        </div>
+        <div class="mb-3">
+            <label for="u_person_count_tb" class="form-label">Person Count</label>
+            <input type="text" class="form-control" id="u_person_count_tb">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="updateRoom()">Update Room</button>
+    </div>
+    <!--------------------------------------------------------------------------------------------------------->
+
+    <script>
+        viewAllRooms();
+
+        async function viewAllRooms() {
+            var romtbl = document.getElementById("room_table");
+            var response = await fetch('/api/Room');
+            var rooms = await response.json();
+            rooms.forEach(room => {
+                var li = document.createElement("li");
+                li.className = "list-group-item";
+                var liTxt = document.createElement("div");
+                liTxt.innerHTML = `${room.Room_Name}`;
+                var buttonGroup = document.createElement("div");
+                buttonGroup.className = "btn-group";
+                var updateButton = document.createElement("button");
+                updateButton.className = "btn btn-primary";
+                updateButton.textContent = "Update";
+                updateButton.addEventListener("click", function(){
+                    showUpdateForm(room.Room_Id);
+                });
+                var deleteButton = document.createElement("button");
+                deleteButton.className = "btn btn-danger";
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", function(){
+                    deleteRoom(room.Room_Id);
+                });
+                buttonGroup.appendChild(updateButton);
+                buttonGroup.appendChild(deleteButton);
+                li.appendChild(liTxt);
+                li.appendChild(buttonGroup);
+                
+                romtbl.appendChild(li);
+            });
+        }
+        function showUpdateForm(id){
+            var form = document.getElementById("updateRoom");
+            var idTB =document.getElementById("u_Roomid_tb");
+            idTB.value = id;
+            form.style.display = "block";
+        }
+        function updateRoom(){
+            var r_id = document.getElementById("u_Roomid_tb").value;
+            var room_name = document.getElementById("u_RoomName_tb").value;
+            var available = document.getElementById("u_is_available_tb").value;
+            var room_price = document.getElementById("u_room_price_tb").value;
+            var person_count = document.getElementById("u_person_count_tb").value;
+
+            if (available == 'true') {
+                available = true;
+            } else {
+                available = false;
+            }
+            var data = {
+                Room_Id: r_id,
+                Room_Name: room_name,
+                Room_aviable: available,
+                Room_price: room_price,
+                Room_count: person_count
+            };
+            fetch("api/room", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Room Bearbeitet");
+                        location.reload();
+                    } else {
+                        console.log(response);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fehler beim code: " + error);
+                });
+
+        }
+        function deleteRoom(id){
+            var r_id = id;
+            fetch("api/room/id?" + r_id,{
+                method: 'DELETE'
+            })
+            .then(response=>{
+                if (response.ok) {
+                    console.log('Room deleted successfully' + response);
+                    location.reload();
+                } 
+                else {
+                    console.error('Failed to delete room ' + response);
+                }
+
+            })
+            .catch(error =>{
+                console.error(error);
+            });
+
+        }
+
+        function addOneRoom() {
+            var room_name = document.getElementById("RoomName_tb").value;
+            var available = document.getElementById("is_available_tb").value;
+            var room_price = document.getElementById("room_price_tb").value;
+            var person_count = document.getElementById("person_count_tb").value;
+            if (available == 'true') {
+                available = true;
+            } else {
+                available = false;
+            }
+            var data = {
+                Room_Id: 0,
+                Room_Name: room_name,
+                Room_aviable: available,
+                Room_price: room_price,
+                Room_count: person_count
+            };
+            fetch("api/room", {
+                method: 'Post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Room Hinzugefügt");
+                        location.reload();
+                    } else {
+                        console.log(response);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fehler beim code: " + error);
+                });
+
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+
+</html>

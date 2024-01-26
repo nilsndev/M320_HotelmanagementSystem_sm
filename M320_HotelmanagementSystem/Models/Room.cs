@@ -5,16 +5,16 @@ namespace M320_HotelmanagementSystem.Models
     public class Room
     {
         [JsonPropertyName("Room_Id")]
-        string Id { get; set; }
+        public int Id { get; set; }
         [JsonPropertyName("Room_Name")]
-        string roomName { get; set; }
+        public string roomName { get; set; }
         [JsonPropertyName("Room_aviable")]
-        bool is_aviable { get; set; }
+        public bool is_aviable { get; set; }
 
         [JsonPropertyName("Room_price")]
-        double price_per_nigth { get; set; }
+        public double price_per_nigth { get; set; }
 
         [JsonPropertyName("Room_count")]
-        double person_count { get; set; }
+        public int person_count { get; set; }
     }
 }
