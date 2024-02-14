@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using M320_HotelmanagementSystem.Models;
-using M320_HotelmanagementSystem.OtherClasses;    
+using M320_HotelmanagementSystem.OtherClasses;  
+
 
 
 namespace M320_HotelmanagementSystem.Controllers
@@ -27,7 +28,7 @@ namespace M320_HotelmanagementSystem.Controllers
 
             connection_class connection = new connection_class();
             connection.executeSELECTQuery(query);
-           
+           DataSettings.ActiveUserName = userName;
             
             Console.WriteLine("wurde ausgefürt");
             
