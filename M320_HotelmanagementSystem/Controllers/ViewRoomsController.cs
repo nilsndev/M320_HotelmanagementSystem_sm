@@ -10,15 +10,12 @@ namespace M320_HotelmanagementSystem.Controllers
         [HttpGet]
         public IActionResult Get(){
             string html = "";
-            //if(DataSettings.ActiveUserID != 0){
+            if(DataSettings.ActiveUserName != ""){
                 html = System.IO.File.ReadAllText("web/viewRooms.html");
-
-           // }
-           /* else
-            {
+            }
+            else{
                 html = System.IO.File.ReadAllText("web/login.html");
-            }*/
-            
+            }
             return Content(html, "text/html");
         }
     }
