@@ -49,12 +49,12 @@ function Login()
 {
     var userName = document.getElementById("username").value;
         var passWord = document.getElementById("password").value;
-        var url = `api/user?User_Name=${encodeURIComponent(userName)}&Passwort=${encodeURIComponent(passWord)}`;
+        var url = ` api/user?userName=${encodeURIComponent(userName)}&password=${encodeURIComponent(passWord)} `;
         fetch(url , 
         {
         method: 'Get',
          } )
-         .then(response => response.json())
+         
          .then(result => {
 console.log('Get-Antwort:', result );
 

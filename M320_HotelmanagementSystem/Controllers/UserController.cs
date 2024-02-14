@@ -23,7 +23,13 @@ namespace M320_HotelmanagementSystem.Controllers
         [HttpGet]
         public IActionResult Get(string userName, string password)
         {
+            string query = "Select * From user Where userName = '"+userName+"' and password = '"+password+"' ";
 
+            connection_class connection = new connection_class();
+            connection.executeSELECTQuery(query);
+           
+            
+            Console.WriteLine("wurde ausgefürt");
             
             return Ok("geht");
         }
