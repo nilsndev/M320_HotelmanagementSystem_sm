@@ -12,25 +12,28 @@ namespace M320_HotelmanagementSystem.Controllers
     public class RoomController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get()
-        {
-            string query = "SELECT * from room";
-            List<Room> rooms = new List<Room>();
-            connection_class conn = new connection_class();
-            MySqlCommand cmd = new MySqlCommand(query, conn.getConnection());
-            MySqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                rooms.Add(new Room()
-                {
-                    Id = reader.GetInt32("ID"),
-                    roomName = reader.GetString("roomName"),
-                    is_aviable = reader.GetInt32("is_available") == 1,
-                    price_per_nigth = reader.GetDouble("price_per_night"),
-                    person_count = reader.GetInt32("personCount")
-                });
+        public IActionResult Get(){
+            try{
+                string query = "SELECT * from room";
+                List<Room> rooms = new List<Room>();
+                connection_class conn = new connection_class();
+                MySqlCommand cmd = new MySqlCommand(query, conn.getConnection());
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()){
+                    rooms.Add(new Room()
+                    {
+                        Id = reader.GetInt32("ID"),
+                        roomName = reader.GetString("roomName"),
+                        is_aviable = reader.GetInt32("is_available") == 1,
+                        price_per_nigth = reader.GetDouble("price_per_night"),
+                        person_count = reader.GetInt32("personCount")
+                    });
+                }
+                return Ok(rooms);
             }
-            return Ok(rooms);
+            catch{
+                return BadRequest("Keine Räume gefunden oder Fehler");
+            }
         }
         [HttpPost]
         public IActionResult Post(Room addedRoom)

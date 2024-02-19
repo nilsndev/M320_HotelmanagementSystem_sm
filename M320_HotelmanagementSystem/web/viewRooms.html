@@ -9,6 +9,9 @@
     <title>Room Management</title>
 </head>
 <style>
+    .custom-margin {
+  margin-left: 20px;
+}
 #room_view{
         width:70%;
         min-width: 300px;
@@ -48,6 +51,32 @@
     }
 </style>
 <body>
+    <!------------------------------------HeadLineCode---------------------------------->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand custom-margin" href="#">Hotelmanagement Tool</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link custom-margin" href="/viewRooms">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link custom-margin" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!--==================================================================================-->
     <div id="overlay"></div>
     <div id="container_parent">
     <div class="col-md-6" id="room_view">

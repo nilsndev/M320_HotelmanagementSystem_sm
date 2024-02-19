@@ -9,8 +9,7 @@ namespace M320_HotelmanagementSystem.Controllers{
         [HttpGet]
         public IActionResult Get(){
             string html = "";
-            if(DataSettings.ActiveUserName != "" && DataSettings.ActiveUserName != null)
-            {
+            if(DataSettings.ActiveUserName != "" && DataSettings.ActiveUserName != null){
                 html = System.IO.File.ReadAllText("web/viewRooms.html");
             }
             else{
