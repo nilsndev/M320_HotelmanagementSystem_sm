@@ -27,12 +27,19 @@ namespace M320_HotelmanagementSystem.Controllers
             string query = "Select * From user Where userName = '"+userName+"' and password = '"+password+"' ";
 
             connection_class connection = new connection_class();
-            connection.executeSELECTQuery(query);
-           DataSettings.ActiveUserName = userName;
+           
+           bool conec = connection.executeSELECTQuery(query);
+
+            if (conec == true)
+            {
+                DataSettings.ActiveUserName = userName;
+                return Ok("geht");
+            }
+            else
+            {
+                return BadRequest("Falscher username oder passwort");
+            }
             
-            Console.WriteLine("wurde ausgefürt");
-            
-            return Ok("geht");
         }
 
 
