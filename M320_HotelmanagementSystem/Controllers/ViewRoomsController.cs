@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using M320_HotelmanagementSystem.OtherClasses;
 
-namespace M320_HotelmanagementSystem.Controllers
-{
+namespace M320_HotelmanagementSystem.Controllers{
     [Route("[controller]")]
     [ApiController]
     public class ViewRoomsController : ControllerBase{
         [HttpGet]
         public IActionResult Get(){
             string html = "";
-            if(DataSettings.ActiveUserName != ""){
+            if(DataSettings.ActiveUserName != "" && DataSettings.ActiveUserName != null)
+            {
                 html = System.IO.File.ReadAllText("web/viewRooms.html");
             }
             else{
